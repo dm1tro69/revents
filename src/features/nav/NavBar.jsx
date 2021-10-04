@@ -3,7 +3,7 @@ import {Button, Container, Menu} from "semantic-ui-react";
 import '../../app/layout/styles.css'
 import logo from '../../assets/logo.png'
 
-const NavBar = () => {
+const NavBar = ({SetFormOpen, formOpen}) => {
     return (
         <Menu inverted fixed={'top'}>
           <Container>
@@ -13,7 +13,7 @@ const NavBar = () => {
               </Menu.Item>
               <Menu.Item name="Events"/>
               <Menu.Item>
-                  <Button positive inverted content={'Create Event'}/>
+                  <Button onClick={()=> SetFormOpen(!formOpen)} positive inverted content={formOpen?'Close Form': 'Create Event'}/>
               </Menu.Item>
               <Menu.Item position={'right'}>
                   <Button basic inverted content={'Login'}/>
