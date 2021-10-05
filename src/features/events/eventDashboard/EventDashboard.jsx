@@ -5,7 +5,11 @@ import EventForm from "../eventForm/EventForm";
 import {sampleData} from "../../../app/api/sampleData";
 
 const EventDashboard = ({formOpen, SetFormOpen}) => {
-    const [events, SetEvents] = useState(sampleData)
+    const [events, setEvents] = useState(sampleData)
+
+    const handleCreateEvent = (event) => {
+        setEvents([...events, event])
+    }
 
     return (
        <Grid>
@@ -13,7 +17,7 @@ const EventDashboard = ({formOpen, SetFormOpen}) => {
                <EventList events={events}/>
            </Grid.Column>
            <Grid.Column width={6}>
-               {formOpen && <EventForm SetFormOpen={SetFormOpen}/>}
+               {formOpen && <EventForm SetFormOpen={SetFormOpen} setEvents={setEvents} handleCreateEvent={handleCreateEvent}/>}
 
            </Grid.Column>
        </Grid>
