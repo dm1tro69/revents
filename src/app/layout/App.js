@@ -3,7 +3,7 @@ import EventDashboard from "../../features/events/eventDashboard/EventDashboard"
 import NavBar from "../../features/nav/NavBar";
 import './styles.css';
 import {Container} from "semantic-ui-react";
-import {Route, Switch} from "react-router-dom";
+import {Route} from "react-router-dom";
 import {useState} from "react";
 import HomePage from "../../features/home/HomePage";
 import EventDetailedPage from "../../features/events/eventDetailed/EventDetailedPage";
@@ -42,7 +42,7 @@ function App() {
                             selectedEvent={selectedEvent}
                             handleSelectEvent={handleSelectEvent}/>
                     </Route>
-                    <Route path={'/createEvent'}>
+                    <Route path={['/createEvent', '/manage/:id']}>
                         <EventForm/>
                     </Route>
                 </Container>

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, Form, Header, Segment} from "semantic-ui-react";
 import cuid from "cuid";
 import user from '../../../assets/user.png'
+import {Link} from "react-router-dom";
 
 const EventForm = ({SetFormOpen, setEvents, handleCreateEvent, selectedEvent, handleUpdateEvent}) => {
     const initialValue = selectedEvent ?? {
@@ -90,7 +91,7 @@ const EventForm = ({SetFormOpen, setEvents, handleCreateEvent, selectedEvent, ha
 
                </Form.Field>
                <Button type="submit" floated={'right'} positive content={'Submit'}/>
-               <Button onClick={()=> SetFormOpen(false)} type="submit" floated={'left'} content={'Cancel'}/>
+               <Button as={Link} to={'/events'} type="submit" floated={'left'} content={'Cancel'}/>
            </Form>
        </Segment>
     );
