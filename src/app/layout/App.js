@@ -24,28 +24,31 @@ function App() {
 
   return (
     <>
-     <NavBar SetFormOpen={handleCreateFormOpen} formOpen={formOpen}/>
-        <Container className={'main'}>
-            <Switch>
-                <Route exact path={'/'}>
-                    <HomePage/>
-                </Route>
-                <Route path={'/events/:id'}>
-                    <EventDetailedPage/>
-                </Route>
-                <Route exact path={'/events'}>
-                    <EventDashboard
-                        formOpen={formOpen}
-                        SetFormOpen={SetFormOpen}
-                        selectedEvent={selectedEvent}
-                        handleSelectEvent={handleSelectEvent}/>
-                </Route>
-                <Route path={'/createEvent'}>
-                    <EventForm/>
-                </Route>
+        <Route exact path={'/'}>
+            <HomePage/>
+        </Route>
+        <Route path={'/(.+)'} render={()=> (
+            <>
+                <NavBar SetFormOpen={handleCreateFormOpen} formOpen={formOpen}/>
+                <Container className={'main'}>
 
-            </Switch>
-        </Container>
+                    <Route path={'/events/:id'}>
+                        <EventDetailedPage/>
+                    </Route>
+                    <Route exact path={'/events'}>
+                        <EventDashboard
+                            formOpen={formOpen}
+                            SetFormOpen={SetFormOpen}
+                            selectedEvent={selectedEvent}
+                            handleSelectEvent={handleSelectEvent}/>
+                    </Route>
+                    <Route path={'/createEvent'}>
+                        <EventForm/>
+                    </Route>
+                </Container>
+            </>
+        )}/>
+
 
     </>
   );
