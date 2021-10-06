@@ -8,15 +8,15 @@ const EventDashboard = ({formOpen, SetFormOpen, handleSelectEvent, selectedEvent
     const [events, setEvents] = useState(sampleData)
 
 
-    const handleCreateEvent = (event) => {
-        setEvents([...events, event])
-    }
-    const handleUpdateEvent = (updatedEvent) => {
-        setEvents(events.map((evt)=> (
-            evt.id === updatedEvent.id ? updatedEvent : evt
-        )))
-        handleSelectEvent(null)
-    }
+    // const handleCreateEvent = (event) => {
+    //     setEvents([...events, event])
+    // }
+    // const handleUpdateEvent = (updatedEvent) => {
+    //     setEvents(events.map((evt)=> (
+    //         evt.id === updatedEvent.id ? updatedEvent : evt
+    //     )))
+    //     handleSelectEvent(null)
+    // }
     const handleDeleteEvent = (eventId) => {
         setEvents(events.filter((evt)=> evt.id !== eventId))
     }
@@ -28,14 +28,7 @@ const EventDashboard = ({formOpen, SetFormOpen, handleSelectEvent, selectedEvent
                <EventList events={events} handleSelectEvent={handleSelectEvent} handleDeleteEvent={handleDeleteEvent}/>
            </Grid.Column>
            <Grid.Column width={6}>
-               {formOpen && <EventForm
-                   SetFormOpen={SetFormOpen}
-                   setEvents={setEvents}
-                   selectedEvent={selectedEvent}
-                   key={selectedEvent ? selectedEvent.id: null}
-                   handleUpdateEvent={handleUpdateEvent}
-                   handleCreateEvent={handleCreateEvent}/>}
-
+               <h2>Event Filters</h2>
            </Grid.Column>
        </Grid>
     );
