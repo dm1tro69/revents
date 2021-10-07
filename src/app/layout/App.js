@@ -8,6 +8,7 @@ import {useState} from "react";
 import HomePage from "../../features/home/HomePage";
 import EventDetailedPage from "../../features/events/eventDetailed/EventDetailedPage";
 import EventForm from "../../features/events/eventForm/EventForm";
+import Sandbox from "../../features/sandbox/Sandbox";
 
 function App() {
     const [formOpen, SetFormOpen] = useState(false)
@@ -26,6 +27,9 @@ function App() {
     <>
         <Route exact path={'/'}>
             <HomePage/>
+        </Route>
+        <Route exact path={'/sandbox'}>
+            <Sandbox/>
         </Route>
         <Route path={'/(.+)'} render={()=> (
             <>
