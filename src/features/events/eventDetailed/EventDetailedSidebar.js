@@ -2,7 +2,8 @@ import React from 'react';
 import {Item, Segment} from "semantic-ui-react";
 import user from '../../../assets/user.png'
 
-const EventDetailedSidebar = () => {
+const EventDetailedSidebar = ({attendees}) => {
+    console.log(attendees)
     return (
         <>
             <Segment
@@ -13,26 +14,22 @@ const EventDetailedSidebar = () => {
                 inverted
                 color="teal"
             >
-                2 People Going
+                {attendees.length} {attendees.length > 1 ? 'People': 'Person'} Going
             </Segment>
             <Segment attached>
                 <Item.Group relaxed divided>
-                    <Item style={{position: 'relative'}}>
-                        <Item.Image size="tiny" src={user}/>
-                        <Item.Content verticalAlign="middle">
-                            <Item.Header as="h3">
-                                <span>Tom</span>
-                            </Item.Header>
-                        </Item.Content>
-                    </Item>
-                    <Item style={{position: 'relative'}}>
-                        <Item.Image size="tiny" src={user}/>
-                        <Item.Content verticalAlign="middle">
-                            <Item.Header as="h3">
-                                <span>Bob</span>
-                            </Item.Header>
-                        </Item.Content>
-                    </Item>
+                    {attendees.map((att)=> (
+                        <Item key={att.id} style={{position: 'relative'}}>
+                            <Item.Image size="tiny" src={att.photoURL || user}/>
+                            <Item.Content verticalAlign="middle">
+                                <Item.Header as="h3">
+                                    <span>{att.displayName}</span>
+                                </Item.Header>
+                            </Item.Content>
+                        </Item>
+                    ))}
+
+
                 </Item.Group>
             </Segment>
         </>
