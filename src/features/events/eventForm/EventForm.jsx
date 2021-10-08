@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams, useHistory} from 'react-router-dom'
 import {createEvent, updateEvent} from "../eventActions";
+import {Formik} from "formik";
 
 const EventForm = () => {
     const {id} = useParams()
@@ -41,68 +42,75 @@ const EventForm = () => {
     return (
        <Segment clearing>
            <Header content={selectedEvent ? 'Edit the event':'Create new event'}/>
-           <Form onSubmit={handlerFormSubmit}>
-               <Form.Field>
-                   <input
-                       type="text"
-                       placeholder={'Event title'}
-                       name="title"
-                       value={values.title}
-                       onChange={(e)=>handleInputChange(e)}/>
-               </Form.Field>
-               <Form.Field>
-                   <input
-                       type="text"
-                       placeholder={'Category'}
-                       name="category"
-                       value={values.category}
-                       onChange={(e)=>handleInputChange(e)}/>
+           <Formik
+               onSubmit={values => console.log(values)}
+               initialValues={initialValue}>
+               {({values, handleChange, handleSubmit}) => (
+                   <Form onSubmit={handleSubmit}>
+                       <Form.Field>
+                           <input
+                               type="text"
+                               placeholder={'Event title'}
+                               name="title"
+                               value={values.title}
+                               onChange={handleChange}/>
+                       </Form.Field>
+                       <Form.Field>
+                           <input
+                               type="text"
+                               placeholder={'Category'}
+                               name="category"
+                               value={values.category}
+                               onChange={handleChange}/>
 
 
-               </Form.Field>
-               <Form.Field>
-                   <input
-                       type="text"
-                       placeholder={'Description'}
-                       name="description"
-                       value={values.description}
-                       onChange={(e)=>handleInputChange(e)}/>
+                       </Form.Field>
+                       <Form.Field>
+                           <input
+                               type="text"
+                               placeholder={'Description'}
+                               name="description"
+                               value={values.description}
+                               onChange={handleChange}/>
 
 
-               </Form.Field>
-               <Form.Field>
-                   <input
-                       type="text"
-                       placeholder={'City'}
-                       name="city"
-                       value={values.city}
-                       onChange={(e)=>handleInputChange(e)}/>
+                       </Form.Field>
+                       <Form.Field>
+                           <input
+                               type="text"
+                               placeholder={'City'}
+                               name="city"
+                               value={values.city}
+                               onChange={handleChange}/>
 
 
-               </Form.Field>
-               <Form.Field>
-                   <input
-                       type="text"
-                       placeholder={'Venue'}
-                       name="venue"
-                       value={values.venue}
-                       onChange={(e)=>handleInputChange(e)}/>
+                       </Form.Field>
+                       <Form.Field>
+                           <input
+                               type="text"
+                               placeholder={'Venue'}
+                               name="venue"
+                               value={values.venue}
+                               onChange={handleChange}/>
 
 
-               </Form.Field>
-               <Form.Field>
-                   <input
-                       type="date"
-                       placeholder={'Date'}
-                       name="date"
-                       value={values.date}
-                       onChange={(e)=>handleInputChange(e)}/>
+                       </Form.Field>
+                       <Form.Field>
+                           <input
+                               type="date"
+                               placeholder={'Date'}
+                               name="date"
+                               value={values.date}
+                               onChange={handleChange}/>
 
 
-               </Form.Field>
-               <Button type="submit" floated={'right'} positive content={'Submit'}/>
-               <Button as={Link} to={'/events'} type="submit" floated={'left'} content={'Cancel'}/>
-           </Form>
+                       </Form.Field>
+                       <Button type="submit" floated={'right'} positive content={'Submit'}/>
+                       <Button as={Link} to={'/events'} type="submit" floated={'left'} content={'Cancel'}/>
+                   </Form>
+               )}
+
+           </Formik>
        </Segment>
     );
 };
