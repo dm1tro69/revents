@@ -35,3 +35,9 @@ export const loadEvents = () => async (dispatch) => {
        toast.error(e)
    }
 }
+export const listenToEvents = (events) => {
+    return {
+        type: FETCH_EVENTS,
+        payload: events
+    }
+}
