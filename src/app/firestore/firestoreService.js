@@ -26,3 +26,11 @@ export function listenToEventsFromFirestore(){
 export function listenToEventFromFirestore(eventId) {
      return db.collection('events').doc(eventId);
 }
+export function addEventToFireStore(event){
+    return db.collection('events').add({
+        ...event,
+        hostedBy: 'Diana',
+        hostPhotoUrl: 'https://randomuser.me/api/portraits/women/22.jpg',
+        attendees: []
+    })
+}

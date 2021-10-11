@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid} from "semantic-ui-react";
-import {useParams} from 'react-router-dom'
+import {useParams, Redirect} from 'react-router-dom'
 import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedChat from "./EventDetailedChat";
@@ -11,22 +11,27 @@ import {listenToEventsFromFirestore} from "../../../app/firestore/firestoreServi
 import {listenToEvents} from "../eventActions";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 
+
 const EventDetailedPage = ({match}) => {
-    const {id} = useParams()
+    // const {id} = useParams()
 
     const dispatch = useDispatch()
 
-    const event = useSelector(state => state.event.events.find(evt => evt.id === id))
-    const {loading} = useSelector(state => state.async)
+    const event = useSelector(state => state.event.events.find(evt => evt.id === match.params.id))
+    const {loading, error} = useSelector(state => state.async)
+
 
     useFirestoreDoc({
-        query: () => listenToEventsFromFirestore(id),
+        query: () => listenToEventsFromFirestore(match.params.id),
         data: (event) => dispatch(listenToEvents([event])),
-        deps: [id, dispatch]
+        deps: [match.params.id, dispatch]
     })
 
-    if (loading || !event){
+    if (loading || (!event && !error)){
         return <LoadingComponent content={'loading event...'}/>
+    }
+    if (error){
+        return <Redirect to={'/error'}/>
     }
 
     return (

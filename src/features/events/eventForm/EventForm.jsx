@@ -4,8 +4,8 @@ import cuid from "cuid";
 import user from '../../../assets/user.png'
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useParams, useHistory} from 'react-router-dom'
-import {createEvent, updateEvent} from "../eventActions";
+import {useParams, useHistory, Redirect} from 'react-router-dom'
+import {createEvent, listenToEvents, updateEvent} from "../eventActions";
 import {Formik, Form} from "formik";
 import * as Yup from 'yup'
 import MyTextInput from "../../../app/common/form/MyTextInput";
@@ -13,13 +13,18 @@ import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import {categoryData} from "../../../app/api/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
+import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
+import {listenToEventsFromFirestore} from "../../../app/firestore/firestoreService";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
-const EventForm = () => {
+const EventForm = ({match}) => {
     const {id} = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
 
     const selectedEvent = useSelector(state => state.event.events.find(evt => evt.id === id))
+    const {loading} = useSelector(state => state.async)
+    const {error} = useSelector(state => state.async)
 
     const initialValue = selectedEvent ?? {
         title: '',
@@ -40,6 +45,18 @@ const EventForm = () => {
         date: Yup.string().required(),
 
     })
+    useFirestoreDoc({
+        query: () => listenToEventsFromFirestore(match.params.id),
+        data: (event) => dispatch(listenToEvents([event])),
+        deps: [match.params.id, dispatch]
+    })
+
+    if (loading || (!selectedEvent && !error)){
+        return <LoadingComponent content={'loading event...'}/>
+    }
+    if (error){
+        return <Redirect to={'/error'}/>
+    }
 
     return (
        <Segment clearing>
